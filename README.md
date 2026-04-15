@@ -28,7 +28,7 @@ A Home Assistant Lovelace custom card for displaying multiple sensor histories a
 
 1. Open **HACS** → **Frontend**
 2. Click the three-dot menu → **Custom repositories**
-3. Enter `https://github.com/iceboerg00/sensor-graphs-card` — category: **Daschboard**
+3. Enter `https://github.com/iceboerg00/sensor-graphs-card` — category: **Dashboard**
 4. Click **Sensor Graphs Card** → **Download**
 5. Reload the browser
 
