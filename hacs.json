@@ -1,0 +1,6 @@
+{
+  "name": "Sensor Graphs Card",
+  "homeassistant": "2024.1.0",
+  "render_readme": true,
+  "filename": "sensor-graphs-card.js"
+}
