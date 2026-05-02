@@ -3,7 +3,7 @@
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 [![GitHub release](https://img.shields.io/github/release/iceboerg00/sensor-graphs-card.svg)](https://github.com/iceboerg00/sensor-graphs-card/releases)
 
-A Home Assistant Lovelace custom card for displaying multiple sensor histories as smooth, interactive area graphs — built for grow tents, climate monitoring, and any multi-sensor setup.
+A Home Assistant Lovelace custom card for displaying multiple sensor histories as smooth, interactive area graphs — designed for grow tents, climate monitoring, and any multi-sensor dashboard.
 
 ---
 
@@ -11,12 +11,12 @@ A Home Assistant Lovelace custom card for displaying multiple sensor histories a
 
 - **Multi-sensor graphs** — display any number of HA sensor entities as individual area charts
 - **Synchronized hover** — hovering one graph shows the value of all other sensors at the same point in time
-- **Smart tooltip** — appears right next to the data point, never obscures the graph below
+- **Smart tooltip** — appears right next to the data point, vertically centered, never covers the line
 - **Time range switcher** — 1h / 6h / 12h / 24h / 7d
 - **5-minute averaging** — raw sensor data is bucketed into 5-minute averages for clean, spike-free graphs
-- **Auto-hide empty graphs** — sensors with no history data are not shown until data is available
+- **Auto-hide empty graphs** — sensors with no history data are hidden until data is available
 - **Responsive layout** — card fills the HA grid slot, graphs share space equally and scroll only when needed
-- **Full Visual Editor** — add, remove, reorder sensors, pick colors — no YAML required
+- **Full Visual Editor** — add, remove, reorder sensors and pick colors — no YAML required
 - **Auto color palette** — new sensors get distinct colors automatically
 - **HACS compatible**
 
@@ -43,41 +43,59 @@ A Home Assistant Lovelace custom card for displaying multiple sensor histories a
 
 ## Configuration
 
-Add the card from the card picker — search for **Sensor Graphs Card**.  
-All options are configurable via the built-in Visual Editor.
+Add the card from the dashboard card picker — search for **Sensor Graphs Card**.  
+All options are configurable through the built-in Visual Editor. No YAML editing required.
 
-### Example YAML
+### Visual Editor
+
+1. Click **+ Sensor hinzufügen** to add a sensor
+2. Pick the entity from the dropdown
+3. Optionally set a custom label and color
+4. Use the ▲ ▼ buttons to reorder
+
+### YAML Example
+
+Replace the entity IDs with your own sensors:
 
 ```yaml
 type: custom:sensor-graphs-card
 title: Grow Tent
 sensors:
-  - entity: sensor.schedule_4_real_cb_temperature
+  - entity: sensor.your_temperature
     color: "#03a9f4"
     label: Temperatur
-  - entity: sensor.schedule_4_real_cb_humidity
+  - entity: sensor.your_humidity
     color: "#4caf50"
     label: Luftfeuchtigkeit
-  - entity: sensor.schedule_4_real_cb_vpd
+  - entity: sensor.your_vpd
     color: "#ffb300"
     label: VPD
-  - entity: sensor.schedule_4_real_cb_ppfd
-    color: "#e91e63"
-    label: PPFD
-  - entity: sensor.schedule_4_real_cb_co2
-    color: "#9c27b0"
-    label: CO2
 ```
 
 ### Options
 
 | Option | Type | Default | Description |
 |---|---|---|---|
-| `title` | `string` | — | Card title |
-| `sensors` | `list` | `[]` | Sensor configurations |
-| `sensors[].entity` | `string` | **required** | HA entity ID |
-| `sensors[].color` | `string` | palette | CSS color for line and fill |
-| `sensors[].label` | `string` | friendly_name | Display name shown in graph header |
+| `title` | `string` | — | Card title shown in the header |
+| `sensors` | `list` | `[]` | List of sensor configurations |
+| `sensors[].entity` | `string` | **required** | HA entity ID with a numeric state |
+| `sensors[].color` | `string` | auto-palette | CSS color for the line and area gradient |
+| `sensors[].label` | `string` | friendly_name | Display name shown in the graph header |
+
+---
+
+## Troubleshooting
+
+**The card shows "Keine Daten" / nothing appears**
+
+- Make sure the entity has a **numeric** state (not text like "on" / "off")
+- Make sure the recorder is enabled and not excluding your entity in `configuration.yaml`
+- Brand-new entities take a few minutes to accumulate history
+- Open the browser console (F12) — any fetch errors will be logged there
+
+**The card stays empty in the dashboard**
+
+- A graph is hidden until at least one data point has been loaded for that sensor. Wait a few seconds after adding a sensor.
 
 ---
 
